@@ -7,7 +7,6 @@ class TimesScreen extends StatelessWidget {
   DateTime time = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    String currentTime = "${time.hour}:${time.minute}:${time.second}";
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
