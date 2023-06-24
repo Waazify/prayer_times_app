@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_times_app/screens/error_screen.dart';
 import 'package:prayer_times_app/screens/login_screen.dart';
 import 'package:prayer_times_app/screens/signup_screen.dart';
 import 'screens/times_screen.dart';
@@ -24,7 +23,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(),
         '/times': (context) => TimesScreen(),
-        '/error': (context) => const ErrorScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignUpScreen(),
       },
     );
   }
@@ -45,34 +45,62 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.white,
         child: Scaffold(
           body: Center(
-              child: Column(
-            children: [
-              Image.network(
-                "https://www.nicepng.com/png/detail/107-1079075_islamic-crescent-with-small-star-comments-islam-crescent.png",
-                height: 100,
-                width: 100,
-              ),
-              const Text("Tawqeet",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              const SizedBox(height: 27),
-              ElevatedButton(
-                  onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()))
-                      },
-                  child: const Text("Go to Login Screen")),
-              ElevatedButton(
-                  onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()))
-                      },
-                  child: const Text("Go to Signup Screen"))
-            ],
-          )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/tawqeet.png",
+                      height: 200,
+                      width: 200,
+                    ),
+                    const Text(
+                      "Tawqeet",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                    const Text("The muslim prayer times App",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300)),
+                    const SizedBox(height: 27),
+                  ],
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: ElevatedButton(
+                          onPressed: () => {
+                            Navigator.pushReplacementNamed(context, '/login')
+                          },
+                          child: const Text("Login"),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: ElevatedButton(
+                          onPressed: () => {
+                            Navigator.pushReplacementNamed(context, '/signup'),
+                          },
+                          child: const Text("Signup"),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 150,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

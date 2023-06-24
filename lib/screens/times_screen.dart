@@ -1,39 +1,51 @@
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
-import "package:get_storage/get_storage.dart";
 import "package:intl/intl.dart";
 import "package:prayer_times_app/models/prayer_times_model.dart";
 import "package:prayer_times_app/screens/login_screen.dart";
 import "package:slide_digital_clock/slide_digital_clock.dart";
 import "package:prayer_times_app/widgets/time_container.dart";
 import 'package:prayer_times_app/API/api_fetch.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:prayer_times_app/models/prayer_times_model.dart';
 
+// ignore: must_be_immutable
 class TimesScreen extends StatelessWidget {
   TimesScreen({super.key});
 
   DateTime now = DateTime.now();
-  var formatter = DateFormat("yyyy-MM");
-  String today = "";
+  var formatter = DateFormat("dd MM yyyy");
 
   @override
   Widget build(BuildContext context) {
-    today = formatter.format(now);
+    String today = formatter.format(now);
+    final splitted = today.split(' ');
     return SafeArea(
         child: Container(
       color: Colors.white,
       child: FutureBuilder<Timings>(
-          future: ApiFetch().fetchPrayerTimes(24, "6", "2023"),
+          future: ApiFetch().fetchPrayerTimes(
+              int.parse(splitted[0]), splitted[1], splitted[2]),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset(
+                    "assets/images/tawqeet.png",
+                    height: 60,
+                    width: 60,
+                  ),
+                  const Text("Tawqeet",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.black)),
                   const Text(
-                    'Current time is:',
+                    "ٱلسَّلَامُ عَلَيْكُمْ",
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  ),
+                  const SizedBox(height: 27),
+                  const Text(
+                    'Current time',
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.black,
@@ -63,7 +75,7 @@ class TimesScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   TimeContainer(
                       prayer: 'Duhr',
-                      time: snapshot.data!.toJson()["Duhr"].toString()),
+                      time: snapshot.data!.toJson()["Dhuhr"].toString()),
                   const SizedBox(height: 20),
                   TimeContainer(
                       prayer: 'Asr',
@@ -77,22 +89,18 @@ class TimesScreen extends StatelessWidget {
                       prayer: 'Isha',
                       time: snapshot.data!.toJson()["Isha"].toString()),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                      onPressed: () =>
-                          // ignore: avoid_print
-                          print(snapshot.data!.toJson().toString()),
-                      child: const Text("Click me ")),
                   Padding(
                       padding: const EdgeInsets.all(20),
                       child: ElevatedButton(
                           onPressed: () => {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()))
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                ),
                               },
-                          child: const Text("Signout")))
+                          child: const Text("Logout")))
                 ],
               );
             } else if (snapshot.hasError) {

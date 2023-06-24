@@ -16,7 +16,7 @@ class ApiFetch {
       dynamic jsonMap = jsonDecode(response.body);
       List<dynamic> itemList = jsonMap["data"];
       dynamic todayTimings = itemList[Day - 1];
-      return Timings.fromJson(todayTimings);
+      return Timings.fromJson(todayTimings["timings"]);
     } else {
       throw Exception("Some error occured");
     }

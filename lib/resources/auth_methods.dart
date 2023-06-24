@@ -1,10 +1,6 @@
-import "dart:typed_data";
-
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:flutter/material.dart";
 import 'package:prayer_times_app/models/user_model.dart' as model;
-import 'package:prayer_times_app/resources/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,7 +20,8 @@ class AuthMethods {
     required String password,
     required String username,
   }) async {
-    String res = "some error occured";
+    String res =
+        "Some error occured. Please check the format of all the fields";
     try {
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
         //regiter the user
@@ -62,7 +59,7 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-    String res = "Some error occured.";
+    String res = "Some error occured";
 
     try {
       if (email.isNotEmpty || password.isNotEmpty) {

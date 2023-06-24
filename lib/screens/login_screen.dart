@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_times_app/screens/signup_screen.dart';
 import 'package:prayer_times_app/screens/times_screen.dart';
 import 'package:prayer_times_app/widgets/text_field_input.dart';
 import "../utils/utils.dart";
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
+  @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
@@ -38,9 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
+      // ignore: use_build_context_synchronously
       showSnackBar(res, context);
     }
 
+    // ignore: avoid_print
     print(res);
     setState(() {
       _isLoading = false;
@@ -55,9 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
           color: Colors.white,
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(
-                  "https://www.nicepng.com/png/detail/107-1079075_islamic-crescent-with-small-star-comments-islam-crescent.png",
+                Image.asset(
+                  "assets/images/tawqeet.png",
                   height: 100,
                   width: 100,
                 ),
@@ -74,15 +79,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 5),
                 Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFieldInput(
-                      textEditingController: _passwordController,
-                      hintText: "Password",
-                      textInputType: TextInputType.text,
-                      isPass: true,
-                    )),
+                  padding: const EdgeInsets.all(10),
+                  child: TextFieldInput(
+                    textEditingController: _passwordController,
+                    hintText: "Password",
+                    textInputType: TextInputType.text,
+                    isPass: true,
+                  ),
+                ),
                 ElevatedButton(
-                    onPressed: () => {loginUser()}, child: const Text("Login"))
+                  onPressed: () => {loginUser()},
+                  child: const Text("Login"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?"),
+                    TextButton(
+                        onPressed: () =>
+                            Navigator.pushReplacementNamed(context, '/signup'),
+                        child: const Text("Signup"))
+                  ],
+                ),
               ],
             ),
           ),
